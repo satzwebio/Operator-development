@@ -15,11 +15,14 @@ GO_VERSION="1.21.1"
 echo "Installing Go version $GO_VERSION..."
 wget https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz
 sudo tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz
-rm go${GO_VERSION}.linux-amd64.tar.gz
-
-# Set Go environment variables
-echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> ~/.bashrc
+export PATH=$PATH:/usr/local/go/bin
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
+echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.bashrc
+echo 'export GOPATH=$HOME/go' >> ~/.bashrc
+echo 'export PATH=$PATH:$GOPATH/bin' >> ~/.bashrc
 source ~/.bashrc
+rm go${GO_VERSION}.linux-amd64.tar.gz
 
 # Install Operator SDK
 echo "Installing Operator SDK..."

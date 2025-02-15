@@ -62,15 +62,15 @@ func (r *ScalerReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctr
 	currentHour := time.Now().UTC().Hour()
 
 	if currentHour >= startTime && currentHour <= endTime {
-		for _, deploy := rabge scaler.Spec.Deployments {
+		for _, deploy := range scaler.Spec.Deployments {
 			deployment := &v1.Deployments{}
 			err := r.Get(ctx, types.NamespacedName{
-				Namespace: deploy.Namespace
-				Name: deploy.Name
+				Namespace: deploy.Namespace,
+				Name:      deploy.Name,
 			},
 				deployment,
 			)
-			if err !=nil {
+			if err != nil {
 				return ctrl.Result{}, err
 			}
 

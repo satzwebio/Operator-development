@@ -17,6 +17,10 @@ sudo systemctl enable --now docker
 sudo usermod -aG docker $USER
 newgrp docker
 
+# Fix Docker socket permissions
+echo "Adjusting Docker socket permissions..."
+sudo chmod 666 /var/run/docker.sock
+
 # Define Go version
 GO_VERSION="1.21.1"
 sudo rm -rf /usr/local/go
@@ -66,6 +70,10 @@ sudo mv ./kind /usr/local/bin/kind
 # Verify Kind installation
 kind version
 
+# Restart Docker service
+echo "Restarting Docker service..."
+sudo systemctl restart docker
+
 # Create Kind cluster
 echo "Creating Kind cluster..."
 kind create cluster --name my-cluster
@@ -73,6 +81,8 @@ kind create cluster --name my-cluster
 # Verify cluster status
 kubectl cluster-info --context kind-my-cluster
 kubectl get nodes
+
+alias k=kubectl
 
 echo "Setup complete!"
 echo "Rebooting..."

@@ -18,7 +18,9 @@ package controllers
 
 import (
 	"context"
+	"time"
 
+	appsv1 "k8s.io/api/apps/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
@@ -50,21 +52,21 @@ func (r *ScalerReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctr
 	_ = log.FromContext(ctx)
 
 	// TODO(user): your logic here
-	scaler := &apiv1alpha1.Scaler()
+	scaler := &apiv1alpha1.Scaler{}
 	err := r.Get(ctx, req.NamespacedName, scaler)
 	if err != nil {
 		return ctrl.Result{}, nil
 	}
-	startTime := scaler.Spec.start
+	startTime := scaler.Spec.Start
 	endTime := scaler.Spec.End
-	replcias := scaler.spec.Replicas
+	replicas := scaler.Spec.Replicas
 
 	currentHour := time.Now().UTC().Hour()
 
 	if currentHour >= startTime && currentHour <= endTime {
 		for _, deploy := range scaler.Spec.Deployments {
-			deployment := &v1.Deployments{}
-			err := r.Get(ctx, types.NamespacedName{
+			deployment := &appsv1.Deployment{}
+			err := r.Get(ctx, client.ObjectKey{
 				Namespace: deploy.Namespace,
 				Name:      deploy.Name,
 			},
@@ -83,7 +85,7 @@ func (r *ScalerReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctr
 		}
 	}
 
-	return ctrl.Result{RequeueAfter: time.Duration(30 * time.Seconds)}, nil
+	return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
 }
 
 // SetupWithManager sets up the controller with the Manager.

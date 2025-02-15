@@ -9,8 +9,8 @@ metadata:
     app.kubernetes.io/created-by: first-operator
   name: scaler-sample
 spec:
-  start: 5
-  end: 10
+  start: 16
+  end: 20
   replicas: 5
   deployments:
     - name: nginx

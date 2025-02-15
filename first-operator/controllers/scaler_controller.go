@@ -77,6 +77,7 @@ func (r *ScalerReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctr
 			}
 
 			if deployment.Spec.Replicas != &replicas {
+				deployment.Spec.Replicas = &replicas
 				err := r.Update(ctx, deployment)
 				if err != nil {
 					return ctrl.Result{}, err

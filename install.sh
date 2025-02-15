@@ -10,19 +10,29 @@ sudo apt upgrade -y
 echo "Installing dependencies..."
 sudo apt install -y wget curl git unzip tar make jq docker.io
 
-# Install Go
+
+# Define Go version
 GO_VERSION="1.21.1"
-echo "Installing Go version $GO_VERSION..."
-wget https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz
+sudo rm -rf /usr/local/go
+
+# Download Go
+wget -q https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz
 sudo tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz
-export PATH=$PATH:/usr/local/go/bin
-export GOPATH=$HOME/go
-export PATH=$PATH:$GOPATH/bin
-echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.bashrc
-echo 'export GOPATH=$HOME/go' >> ~/.bashrc
-echo 'export PATH=$PATH:$GOPATH/bin' >> ~/.bashrc
-source ~/.bashrc
-rm go${GO_VERSION}.linux-amd64.tar.gz
+
+# Set up environment variables
+echo "export PATH=\$PATH:/usr/local/go/bin" | sudo tee -a ~/.profile
+echo "export GOPATH=\$HOME/go" | sudo tee -a ~/.profile
+echo "export PATH=\$PATH:\$GOPATH/bin" | sudo tee -a ~/.profile
+
+# Apply changes
+source ~/.profile
+
+# Clean up
+rm -f go${GO_VERSION}.linux-amd64.tar.gz
+
+# Verify installation
+go version
+
 
 # Install Operator SDK
 echo "Installing Operator SDK..."

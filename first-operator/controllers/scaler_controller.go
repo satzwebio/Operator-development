@@ -50,8 +50,40 @@ func (r *ScalerReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctr
 	_ = log.FromContext(ctx)
 
 	// TODO(user): your logic here
+	scaler := &apiv1alpha1.Scaler()
+	err := r.Get(ctx, req.NamespacedName, scaler)
+	if err != nil {
+		return ctrl.Result{}, nil
+	}
+	startTime := scaler.Spec.start
+	endTime := scaler.Spec.End
+	replcias := scaler.spec.Replicas
 
-	return ctrl.Result{}, nil
+	currentHour := time.Now().UTC().Hour()
+
+	if currentHour >= startTime && currentHour <= endTime {
+		for _, deploy := rabge scaler.Spec.Deployments {
+			deployment := &v1.Deployments{}
+			err := r.Get(ctx, types.NamespacedName{
+				Namespace: deploy.Namespace
+				Name: deploy.Name
+			},
+				deployment,
+			)
+			if err !=nil {
+				return ctrl.Result{}, err
+			}
+
+			if deployment.Spec.Replicas != &replicas {
+				err := r.Update(ctx, deployment)
+				if err != nil {
+					return ctrl.Result{}, err
+				}
+			}
+		}
+	}
+
+	return ctrl.Result{RequeueAfter: time.Duration(30 * time.Seconds)}, nil
 }
 
 // SetupWithManager sets up the controller with the Manager.

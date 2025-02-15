@@ -31,7 +31,7 @@ type ScalerSpec struct {
 	// Foo is an example field of Scaler. Edit scaler_types.go to remove/update
 	Start	int `json:"start"`
 	End	int	`json:"end"`
-	Replicas	int	`json:"replicas"`
+	Replicas	int32	`json:"replicas"`
 	Deployments []NamespacedName `json:"deployments"`
 }
 

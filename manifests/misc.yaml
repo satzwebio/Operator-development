@@ -1,0 +1,1 @@
+kubectl auth can-i list scalers --as=system:serviceaccount:default:scaler-operator-sa

@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scaler-operator
+  labels:
+    app: scaler-operator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: scaler-operator
+  template:
+    metadata:
+      labels:
+        app: scaler-operator
+    spec:
+      serviceAccountName: scaler-operator-sa
+      containers:
+        - name: scaler-operator
+          image: satzweb/scaler-operator:v1.0
+          imagePullPolicy: IfNotPresent

@@ -80,6 +80,12 @@ func (r *ScalerReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctr
 				deployment.Spec.Replicas = &replicas
 				err := r.Update(ctx, deployment)
 				if err != nil {
+					scaler.Status.Status = apiv1alpha1.FAILED
+					return ctrl.Result{}, err
+				}
+				scaler.Status.Status = apiv1alpha1.SUCCESS
+				err = r.Status().Update(ctx, scaler)
+				if err != nil {
 					return ctrl.Result{}, err
 				}
 			}

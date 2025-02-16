@@ -9,7 +9,7 @@ metadata:
     app.kubernetes.io/created-by: first-operator
   name: scaler-sample
 spec:
-  start: 16
+  start: 11
   end: 20
   replicas: 5
   deployments:

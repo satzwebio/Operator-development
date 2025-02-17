@@ -1,0 +1,45 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: ClusterServiceVersion
+metadata:
+  annotations:
+    alm-examples: '[]'
+    capabilities: Basic Install
+  name: first-operator.v0.0.0
+  namespace: placeholder
+spec:
+  apiservicedefinitions: {}
+  customresourcedefinitions:
+    owned:
+    - description: Scaler is the Schema for the scalers API
+      displayName: Scaler
+      kind: Scaler
+      name: scalers.api.example.com
+      version: v1alpha1
+  description: This operator scales the deployment specified in the CR.
+  displayName: dep-scaler
+  icon:
+  - base64data: ""
+    mediatype: ""
+  install:
+    spec:
+      deployments: null
+    strategy: ""
+  installModes:
+  - supported: false
+    type: OwnNamespace
+  - supported: false
+    type: SingleNamespace
+  - supported: false
+    type: MultiNamespace
+  - supported: true
+    type: AllNamespaces
+  keywords:
+  - scaler
+  - depscaler
+  links:
+  - name: First Operator
+    url: https://first-operator.domain
+  maturity: alpha
+  provider:
+    name: test
+  version: 0.0.0

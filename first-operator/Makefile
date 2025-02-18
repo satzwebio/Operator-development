@@ -51,7 +51,7 @@ endif
 OPERATOR_SDK_VERSION ?= v1.30.0
 
 # Image URL to use all building/pushing image targets
-IMG ?= quay.io/satzredhat/scaler-operator-bundle:v1.0.4
+IMG ?= quay.io/satzredhat/scaler-operator-bundle:v1.0.9
 # ENVTEST_K8S_VERSION refers to the version of kubebuilder assets to be downloaded by envtest binary.
 ENVTEST_K8S_VERSION = 1.26.0
 

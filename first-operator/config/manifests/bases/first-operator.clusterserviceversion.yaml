@@ -5,7 +5,7 @@ metadata:
     alm-examples: '[]'
     capabilities: Basic Install
   name: first-operator.v0.0.0
-  namespace: placeholder
+  namespace: scaler-apps
 spec:
   apiservicedefinitions: {}
   customresourcedefinitions:
@@ -22,14 +22,27 @@ spec:
     mediatype: ""
   install:
     spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app: scaler-operator
+      template:
+        metadata:
+          labels:
+            app: scaler-operator
+        spec:
+          serviceAccountName: scaler-operator-sa
+          containers:
+            - name: scaler-operator
+              image: quay.io/satzredhat/scaler-operator:v1.0.11
       deployments: null
-    strategy: ""
+    strategy: deployment
   installModes:
-  - supported: false
+  - supported: true
     type: OwnNamespace
-  - supported: false
+  - supported: true
     type: SingleNamespace
-  - supported: false
+  - supported: true
     type: MultiNamespace
   - supported: true
     type: AllNamespaces

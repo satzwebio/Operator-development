@@ -84,6 +84,18 @@ kubectl get nodes
 
 alias k=kubectl
 
+# Installing OPM(Operator Indexing tool)
+curl -LO https://github.com/operator-framework/operator-registry/releases/download/v1.50.0/linux-amd64-opm
+chmod +x linux-amd64-opm
+sudo mv linux-amd64-opm /usr/local/bin/opm
+opm version
+
+# Install Podman
+sudo apt update
+sudo apt install -y podman
+
+
+
 echo "Setup complete!"
 echo "Rebooting..."
 sudo reboot

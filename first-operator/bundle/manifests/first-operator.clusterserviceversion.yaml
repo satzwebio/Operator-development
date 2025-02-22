@@ -4,11 +4,11 @@ metadata:
   annotations:
     alm-examples: '[]'
     capabilities: Basic Install
-    createdAt: "2025-02-17T13:49:02Z"
+    createdAt: "2025-02-22T12:57:20Z"
     operators.operatorframework.io/builder: operator-sdk-v1.30.0
     operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
-  name: first-operator.v1.0.0
-  namespace: placeholder
+  name: first-operator.v1.0.10
+  namespace: scaler-apps
 spec:
   apiservicedefinitions: {}
   customresourcedefinitions: {}
@@ -22,11 +22,11 @@ spec:
       deployments: []
     strategy: deployment
   installModes:
-  - supported: false
+  - supported: true
     type: OwnNamespace
-  - supported: false
+  - supported: true
     type: SingleNamespace
-  - supported: false
+  - supported: true
     type: MultiNamespace
   - supported: true
     type: AllNamespaces
@@ -39,4 +39,4 @@ spec:
   maturity: alpha
   provider:
     name: test
-  version: 1.0.0
+  version: 1.0.10

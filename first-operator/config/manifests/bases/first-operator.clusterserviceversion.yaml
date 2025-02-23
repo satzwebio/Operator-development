@@ -4,55 +4,60 @@ metadata:
   annotations:
     alm-examples: '[]'
     capabilities: Basic Install
-  name: first-operator.v0.0.0
+  name: first-operator.v1.0.12
   namespace: scaler-apps
 spec:
   apiservicedefinitions: {}
   customresourcedefinitions:
     owned:
-    - description: Scaler is the Schema for the scalers API
-      displayName: Scaler
-      kind: Scaler
-      name: scalers.api.example.com
-      version: v1alpha1
+      - description: Scaler is the Schema for the scalers API
+        displayName: Scaler
+        kind: Scaler
+        name: scalers.api.example.com
+        version: v1alpha1
   description: This operator scales the deployment specified in the CR.
   displayName: dep-scaler
   icon:
-  - base64data: ""
-    mediatype: ""
+    - base64data: ""
+      mediatype: ""
   install:
-    spec:
-      replicas: 1
-      selector:
-        matchLabels:
-          app: scaler-operator
-      template:
-        metadata:
-          labels:
-            app: scaler-operator
-        spec:
-          serviceAccountName: scaler-operator-sa
-          containers:
-            - name: scaler-operator
-              image: quay.io/satzredhat/scaler-operator:v1.0.11
-      deployments: null
     strategy: deployment
+    spec:
+      deployments:
+        - name: first-operator-deployment
+          spec:
+            replicas: 1
+            selector:
+              matchLabels:
+                app: scaler-operator
+            template:
+              metadata:
+                labels:
+                  app: scaler-operator
+              spec:
+                serviceAccountName: scaler-operator-sa
+                containers:
+                  - name: scaler-operator
+                    image: quay.io/satzredhat/scaler-operator:v1.0.12
+                    ports:
+                      - containerPort: 8080
+    strategySpec: {}
   installModes:
-  - supported: true
-    type: OwnNamespace
-  - supported: true
-    type: SingleNamespace
-  - supported: true
-    type: MultiNamespace
-  - supported: true
-    type: AllNamespaces
+    - supported: true
+      type: OwnNamespace
+    - supported: true
+      type: SingleNamespace
+    - supported: true
+      type: MultiNamespace
+    - supported: true
+      type: AllNamespaces
   keywords:
-  - scaler
-  - depscaler
+    - scaler
+    - depscaler
   links:
-  - name: First Operator
-    url: https://first-operator.domain
+    - name: First Operator
+      url: https://first-operator.domain
   maturity: alpha
   provider:
     name: test
-  version: 0.0.0
+  version: 1.0.12

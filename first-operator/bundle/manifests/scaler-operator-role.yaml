@@ -1,0 +1,17 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: scaler-operator-role
+rules:
+- apiGroups:
+  - api.example.com
+  - apps
+  resources:
+  - scalers
+  - deployments
+  verbs:
+  - get
+  - list
+  - watch
+  - update
+  - patch

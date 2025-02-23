@@ -94,6 +94,9 @@ opm version
 sudo apt update
 sudo apt install -y podman
 
+# Install Kustomize
+sudo snap install kustomize
+
 
 
 echo "Setup complete!"
